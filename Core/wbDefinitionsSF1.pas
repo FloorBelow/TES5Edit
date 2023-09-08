@@ -17679,8 +17679,27 @@ begin
     wbEDID,
     wbBaseFormComponents,
     wbUnknown(CNAM), //req
-    wbRArray('Unknown', wbUnknown(PPBD)),
-    wbUnknown(FNAM), //req
+    wbRArray('Biome Data',
+      wbStruct(PPBD, 'Per Biome Data', [
+        wbFormIDCk('Biome', [BIOM]),
+        wbFloat('Unknown'),
+        wbUnknown(4),
+        wbFormIDCk('Resource Generation Data', [RSGD]),
+        wbArray('NPCs', wbFormIDCk('NPC', [NPC_]), -1),
+        wbUnknown(4), //always 0
+        wbInteger('Plant Count', itU32),
+        wbUnknown(4), //always 9
+        wbArray('Plants',
+          wbStruct('Plant', [
+            wbFormIDCk('Flora', [FLOR]),
+            wbFormIDCk('Item', [MISC]),
+            wbInteger('Unknown', itU8) //spawn chance?
+          ])
+        ),
+        wbUnknown(4) //always 0
+      ])
+    ),
+    wbFormIDCk(FNAM, 'Surface Tree', [SFTR]), //req
     wbUnknown(GNAM), //req
     wbRStructs('Unknown', 'Unknown', [
       wbUnknown(BDST), //req
